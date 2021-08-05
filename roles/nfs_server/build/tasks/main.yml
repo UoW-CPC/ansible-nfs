@@ -1,0 +1,24 @@
+---
+- name: 'NFS install package'
+  apt:
+    name:
+    - nfs-kernel-server
+    state: present
+  when: ansible_distribution == "Ubuntu"
+- name: 'NFS create directory'
+  file:
+    path: /srv/nfs4/share
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: 0777
+- name: 'NFS add root export'
+  lineinfile:
+    path: /etc/exports
+    line: '/srv/nfs4       10.255.230.0/24(rw,sync,no_subtree_check,crossmnt,fsid=0)'
+    insertbefore: EOF
+- name: 'NFS add share export'
+  lineinfile:
+    path: /etc/exports
+    line: '/srv/nfs4/share 10.255.230.0/24(rw,sync,no_subtree_check)'
+    insertbefore: EOF

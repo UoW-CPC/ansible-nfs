@@ -1,0 +1,26 @@
+---
+- name: Deploy NFS server
+  hosts: all
+  become: true
+  gather_facts: true
+
+  #pre_tasks:
+  #- name: (Ansible) Include pre-tasks
+  #  include_tasks: "{{ task_item }}"
+  #  loop: "{{ query('fileglob', \"pre-task/[0-9][0-9]*.yml\")|sort }}"
+  #  loop_control:
+  #    loop_var: task_item
+  #  tags:
+  #  - always
+
+      #handlers:
+      #- include: roles/common/handlers/main.yml
+
+  roles:
+  - role: nfs_server/build
+    tags:
+    - build
+  - role: nfs_server/start
+    tags:
+    - start
+

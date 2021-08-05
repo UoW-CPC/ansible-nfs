@@ -1,0 +1,9 @@
+---
+- name: 'NFS restart service'
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    name: nfs-kernel-server.service
+
+- name: 'NFS export share'
+  command: exportfs -rav
